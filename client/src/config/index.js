@@ -7,25 +7,18 @@ export const registerFormControllers = [
         type: "text",
     },
     {
-        name: 'userName',
-        lebel: 'User Name',
-        placeholder: "Enter Your User Name",
+        name: 'email',
+        lebel: 'Email',
+        placeholder: "Enter Your Email",
         componentType: 'input',
-        type: "text",
+        type: "email",
     },
     {
-        name: 'userName',
-        lebel: 'User Name',
-        placeholder: "Enter Your User Name",
+        name: 'password',
+        lebel: 'Password',
+        placeholder: "Enter Your Password",
         componentType: 'input',
-        type: "text",
-    },
-    {
-        name: 'userName',
-        lebel: 'User Name',
-        placeholder: "Enter Your User Name",
-        componentType: 'input',
-        type: "text",
+        type: "password",
     },
 
 ]
