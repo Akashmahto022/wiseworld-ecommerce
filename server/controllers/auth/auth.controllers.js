@@ -37,7 +37,7 @@ const register = async(req, res)=>{
 
         const hashPassword = await becrypt.hash(password, 10)
         const newUser = new User({
-            username, email, hashPassword
+            username, email, password: hashPassword
         })
 
         await newUser.save()
