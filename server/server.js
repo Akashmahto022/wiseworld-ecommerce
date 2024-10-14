@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import authRouter from "./routes/auth/auth.route.js";
 
 // create a database connection
 mongoose
@@ -19,10 +20,14 @@ app.use(
     origin: "http://localhost:5173/",
     methods: ["GET", "POST", "DELETE", "PUT"],  
     Credential: true,
+    allowedHeaders:true
   })
 );
 
 app.use(express.json());
 app.use(cookieParser());
+app.use('/api/auth', authRouter)
 
 app.listen(PORT, () => console.log(`server is running on the port http://localhost:${PORT}`));
+
+
