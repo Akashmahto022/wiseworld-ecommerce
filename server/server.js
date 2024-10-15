@@ -10,7 +10,7 @@ mongoose
     "mongodb+srv://akashmahto2272003:wiseworld5060@cluster0.0xrfe.mongodb.net/"
   )
   .then(() => console.log("MongoDB Connected"))
-  .catch(() => console.log("error connecting in MongoDB", Error));
+  .catch((error) => console.log("error connecting in MongoDB", error.message));
 
 const app = express(); 
 const PORT = process.env.PORT || 4000;
@@ -27,6 +27,10 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRouter)
+
+app.get('/',(req, res)=>{
+  res.send("your are On Now")
+})
 
 app.listen(PORT, () => console.log(`server is running on the port http://localhost:${PORT}`));
 
