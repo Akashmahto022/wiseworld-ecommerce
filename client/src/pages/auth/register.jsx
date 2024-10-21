@@ -12,9 +12,6 @@ const initialState = {
 const AuthRegister = () => {
   const [formData, setFormData] = useState(initialState)
   
-  console.log(formData)
-
-
   const onSubmit = ()=>{
 
   }
