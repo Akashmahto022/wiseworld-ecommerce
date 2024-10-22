@@ -98,7 +98,15 @@ const login = async (req, res) => {
 };
 
 //logout
-const logout = async (req, rec) => {};
+const logout = async (req, rec) => {
+  res
+    .clearCookie("accessToken", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(200)
+    .json({ status: true, message: "User logout Successfully" });
+};
 
 //auth middlerware
 
