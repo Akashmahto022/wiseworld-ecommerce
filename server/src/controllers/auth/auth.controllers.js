@@ -57,26 +57,37 @@ const register = async (req, res) => {
 //login
 const login = async (req, res) => {
   const { email, password } = req.body;
-
-  const user = await User.findOne(email);
-  if (!user) {
-    res
-      .status(500)
-      .json({
+  try {
+    const user = await User.findOne(email);
+    if (!user) {
+      res.status(500).json({
         status: false,
         message: "user not exists with this email please try to register first",
       });
-  }
+    }
 
-  const isPasswordCorrect = await becrypt.compare(password, user.password);
+    const isPasswordCorrect = await becrypt.compare(password, user.password);
 
-  if (!isPasswordCorrect) {
-    res.status(500).json({status: false, message: "You entered wrong password! please re enter the correct one"})
-  }
+    if (!isPasswordCorrect) {
+      res.status(500).json({
+        status: false,
+        message: "You entered wrong password! please re enter the correct one",
+      });
+    }
 
-  jwt.sign()
+    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY_ACCESS_TOKEN);
 
-  try {
+    const logedInUser = await User.findById(user._id).select("-password");
+
+    const option = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    res
+      .status(200)
+      .cookie("accessToken", token, option)
+      .json({ status: true, data: logedInUser, accessToken: token });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
