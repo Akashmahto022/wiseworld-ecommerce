@@ -14,7 +14,7 @@ const register = async (req, res) => {
       });
     }
 
-    const alreadyEmailRegister = await User.findOne(email);
+    const alreadyEmailRegister = await User.findOne({email});
 
     if (alreadyEmailRegister) {
       res.status(409).json({
@@ -22,7 +22,7 @@ const register = async (req, res) => {
         message: "User already register with this email",
       });
     }
-    const alreadyUsernameRegister = await User.findOne(username);
+    const alreadyUsernameRegister = await User.findOne({username});
 
     if (alreadyUsernameRegister) {
       res.status(409).json({
@@ -58,7 +58,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne(email);
+    const user = await User.findOne({email});
     if (!user) {
       res.status(500).json({
         status: false,
@@ -87,7 +87,7 @@ const login = async (req, res) => {
     res
       .status(200)
       .cookie("accessToken", token, option)
-      .json({ status: true, data: logedInUser, accessToken: token });
+      .json({ status: true,message: "Login successfully", data: logedInUser, accessToken: token });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
@@ -98,7 +98,7 @@ const login = async (req, res) => {
 };
 
 //logout
-const logout = async (req, rec) => {
+const logout = async (req, res) => {
   res
     .clearCookie("accessToken", {
       sameSite: "none",
