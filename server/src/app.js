@@ -16,7 +16,7 @@ app.use(express.json())
 
 
 // route declaration
-app.use("/auth/user", authRouter)
+app.use("/api/auth/user", authRouter)
 
 
 app.get('/', (req, res)=>{

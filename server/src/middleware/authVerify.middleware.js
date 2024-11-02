@@ -5,12 +5,10 @@ import { User } from '../models/User.Moduls.js';
 const tokenVerify = async(req, res, next)=>{
     try {
         const token = await req.cookie?.accessToken;
-        console.log(token)
 
         if (!token) {
             return res.json({status:false, message: "user not authenticated"})
         }
-
 
         const decodeToken = jwt.verify(token, process.env.JWT_KEY_ACCESS_TOKEN)
         const user = await User.findById(decodeToken?.id).select("-password")
