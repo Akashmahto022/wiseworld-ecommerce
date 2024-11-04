@@ -9,7 +9,7 @@ const register = async (req, res) => {
   try {
     if (!username && !email && !password) {
       res.status(204).json({
-        status: false,
+        success: false,
         message: "provide all the details like (username, email and password)",
       });
     }
@@ -18,7 +18,7 @@ const register = async (req, res) => {
 
     if (alreadyEmailRegister) {
       res.json({
-        status: false,
+        success: false,
         message: "User already register with this email",
       }); 
     }
@@ -26,7 +26,7 @@ const register = async (req, res) => {
 
     if (alreadyUsernameRegister) {
       res.json({
-        status: false,
+        success: false,
         message:
           "User already register with this username, please try something diffrent username",
       });
@@ -60,8 +60,8 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({email});
     if (!user) {
-      res.status(500).json({
-        status: false,
+      res.json({
+        success: false,
         message: "user not exists with this email please try to register first",
       });
     }
@@ -69,8 +69,8 @@ const login = async (req, res) => {
     const isPasswordCorrect = await becrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      res.status(500).json({
-        status: false,
+      res.json({
+        success: false,
         message: "You entered wrong password! please re enter the correct one",
       });
     }
@@ -81,13 +81,13 @@ const login = async (req, res) => {
 
     const option = {
       httpOnly: true,
-      secure: true,
+      secure: false,
     };
 
     res
       .status(200)  
       .cookie("accessToken", token, option)
-      .json({ status: true,success: true, message: "Login successfully", data: logedInUser, accessToken: token });
+      .json({success: true, message: "Login successfully", data: logedInUser, accessToken: token });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
@@ -105,7 +105,7 @@ const logout = async (req, res) => {
       secure: true,
     })
     .status(200)
-    .json({ status: true, message: "User logout Successfully" });
+    .json({ success: true, message: "User logout Successfully" });
 };
 
 //auth middlerware
