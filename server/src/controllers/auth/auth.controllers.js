@@ -87,7 +87,7 @@ const login = async (req, res) => {
     res
       .status(200)  
       .cookie("accessToken", token, option)
-      .json({ status: true,message: "Login successfully", data: logedInUser, accessToken: token });
+      .json({ status: true,success: true, message: "Login successfully", data: logedInUser, accessToken: token });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
