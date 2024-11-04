@@ -75,7 +75,7 @@ const login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY_ACCESS_TOKEN);
+    const token = jwt.sign({ id: user._id, role:user.role, email: user.email }, process.env.JWT_KEY_ACCESS_TOKEN, {expiresIn: '60m'});
 
     const logedInUser = await User.findById(user._id).select("-password");
 
@@ -85,7 +85,7 @@ const login = async (req, res) => {
     };
 
     res
-      .status(200)
+      .status(200)  
       .cookie("accessToken", token, option)
       .json({ status: true,message: "Login successfully", data: logedInUser, accessToken: token });
   } catch (error) {

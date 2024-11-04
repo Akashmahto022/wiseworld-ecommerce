@@ -30,6 +30,7 @@ const AuthRegister = () => {
       }else{
         toast({
           title: data?.payload?.message,
+          variant: "destructive",
         })
       }
     })
@@ -66,3 +67,6 @@ const AuthRegister = () => {
 };
 
 export default AuthRegister;
+
+
+
