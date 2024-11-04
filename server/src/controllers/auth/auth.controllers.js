@@ -17,15 +17,15 @@ const register = async (req, res) => {
     const alreadyEmailRegister = await User.findOne({email});
 
     if (alreadyEmailRegister) {
-      res.status(409).json({
+      res.json({
         status: false,
         message: "User already register with this email",
-      });
+      }); 
     }
     const alreadyUsernameRegister = await User.findOne({username});
 
     if (alreadyUsernameRegister) {
-      res.status(409).json({
+      res.json({
         status: false,
         message:
           "User already register with this username, please try something diffrent username",
@@ -40,14 +40,14 @@ const register = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "user register successfully",
       data: newUser,
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error while register the user",
     });

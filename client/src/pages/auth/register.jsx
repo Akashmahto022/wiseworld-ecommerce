@@ -22,11 +22,15 @@ const AuthRegister = () => {
     e.preventDefault()
     dispatch(registerUser(formData)).then((data)=>{
       console.log(data)
-      if (data.payload.success == true) {
+      if (data?.payload?.success == true) {
         toast({
           title: data?.payload?.message,
         })
         navigate("/auth/login")
+      }else{
+        toast({
+          title: data?.payload?.message,
+        })
       }
     })
   }
