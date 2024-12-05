@@ -19,10 +19,8 @@ import UnauthPage from "./pages/unauth-page";
 import { useSelector } from "react-redux";
 
 function App() {
-
-
-  const {user, isAuthenticated} = useSelector(state=> state.auth)
-  console.log(user)
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  console.log(user, isAuthenticated);
 
   return (
     <div className=" flex flex-col overflow-hidden bg-white">
