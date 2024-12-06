@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -6,7 +6,6 @@ const initialState = {
   isLoading: true,
   user: null,
 };
-
 
 // register
 export const registerUser = createAsyncThunk(
@@ -24,20 +23,28 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// login 
-export const loginUser = createAsyncThunk(
-  "/auth/login",
-  async (formData) => {
-    const response = await axios.post(
-      "http://localhost:4000/api/auth/user/login",
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  }
-);
+// login
+export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
+  const response = await axios.post(
+    "http://localhost:4000/api/auth/user/login",
+    formData,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+});
+
+// check authenticated user
+export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
+  const response = await axios.get(
+    "http://localhost:4000/api/auth/user/check-auth",
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+});
 
 const authSlice = createSlice({
   name: "auth",
@@ -64,14 +71,26 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        // console.log(action);
-        console.log(action.payload.data);
 
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.data : null
-        state.isAuthenticated = action.payload.success
+        state.user = action.payload.success ? action.payload.data : null;
+        state.isAuthenticated = action.payload.success;
       })
       .addCase(loginUser.rejected, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(checkAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(checkAuth.fulfilled, (state, action) => {
+
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success;
+      })
+      .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;

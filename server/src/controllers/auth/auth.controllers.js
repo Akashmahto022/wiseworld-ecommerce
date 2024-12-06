@@ -128,5 +128,14 @@ const logout = async (req, res) => {
 };
 
 //auth middlerware
+const checkAuth=(req, res)=>{
+  const user = req.user;
+  res.json({
+    status: 200,
+    success: true,
+    message: 'User is Authenticated',
+    user: user
+  })
+}
 
-export { register, login, logout };
+export { register, login, logout, checkAuth};

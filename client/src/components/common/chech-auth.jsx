@@ -3,7 +3,6 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const CheckAuth = ({ isAuthenticated, user, children }) => {
   const location = useLocation();
-  console.log(location.pathname, isAuthenticated)
 
   if (
     !isAuthenticated &&
@@ -21,7 +20,6 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
       location.pathname.includes("/register"))
   ) {
     if (user?.role == "admin") {
-      console.log(user)
       return <Navigate to={"/admin/deshboard"} />;
     } else {
       return <Navigate to={"/shop/home"} />;
