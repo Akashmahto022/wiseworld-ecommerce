@@ -1,12 +1,14 @@
-import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: true,
   user: null,
 };
 
+
+// register
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData) => {
@@ -21,6 +23,8 @@ export const registerUser = createAsyncThunk(
     return response.data;
   }
 );
+
+// login 
 export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData) => {
@@ -48,7 +52,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        state.user = null;
         state.isAuthenticated = false;
       })
       .addCase(registerUser.rejected, (state) => {
@@ -60,10 +64,12 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action)
+        // console.log(action);
+        console.log(action.payload.data);
+
         state.isLoading = false;
-        state.user =!action.payload.success ? null : action.payload.data;
-        state.isAuthenticated =!action.payload.success ? false : true;
+        state.user = action.payload.success ? action.payload.data : null
+        state.isAuthenticated = action.payload.success
       })
       .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;

@@ -21,7 +21,6 @@ const AuthRegister = () => {
   const onSubmit = (e)=>{  
     e.preventDefault()
     dispatch(registerUser(formData)).then((data)=>{
-      console.log(data)
       if (data?.payload?.success == true) {
         toast({
           title: data?.payload?.message,
@@ -36,7 +35,6 @@ const AuthRegister = () => {
     })
   }
 
-  console.log(formData);
   
 
   return (
