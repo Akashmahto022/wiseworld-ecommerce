@@ -19,6 +19,8 @@ import UnauthPage from "./pages/unauth-page";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector((state) => state.auth);
@@ -31,8 +33,8 @@ function App() {
 
   if (isLoading) {
     return (
-      <div>Please Wait Loading Page...</div>
-    )
+      <Skeleton className="w-[600px] h-[600px]" />
+    ) 
   }
 
   return (
