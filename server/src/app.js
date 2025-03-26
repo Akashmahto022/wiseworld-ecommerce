@@ -8,7 +8,7 @@ const app = express()
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
-    credentials:true
+    credentials: true
 }))
 
 app.use(cookieParser())
@@ -19,9 +19,8 @@ app.use(express.json())
 app.use("/api/auth/user", authRouter)
 
 
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.send("I'm a Software developer")
 })
 
-
-export {app}
+export { app };
